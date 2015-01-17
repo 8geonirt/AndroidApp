@@ -48,9 +48,15 @@ public class CompaniesList extends ActionBarActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Company c = list.get(position);
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(c.getUrl()));
-                startActivity(i);
+                if(c.getUrl().startsWith("http")){
+                    Toast.makeText(getApplicationContext(),"Abriendo página",Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(c.getUrl()));
+                    startActivity(i);
+                }else{
+                    Toast.makeText(getApplicationContext(),"Error al obtener url",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
