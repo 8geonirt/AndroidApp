@@ -1,11 +1,8 @@
 package com.trinoeg8.trino.oneloginexampleapp;
 
-import android.app.Activity;
-import android.app.ListActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.trinoeg8.trino.oneloginexampleapp.Clases.CompaniesDataSource;
@@ -13,7 +10,6 @@ import com.trinoeg8.trino.oneloginexampleapp.Clases.Company;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Trino on 17/01/2015.
