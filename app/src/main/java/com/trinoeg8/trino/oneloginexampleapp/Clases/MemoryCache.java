@@ -9,7 +9,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import android.graphics.Bitmap;
-import android.util.Log;
 
 public class MemoryCache {
 

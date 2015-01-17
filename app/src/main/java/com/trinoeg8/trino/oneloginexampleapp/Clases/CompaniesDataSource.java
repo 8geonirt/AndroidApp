@@ -15,7 +15,7 @@ public class CompaniesDataSource {
     private SQLiteDatabase database;
     private SQliteHelper dbHelper;
     private String[] allColumns = { SQliteHelper.COLUMN_ID,
-            SQliteHelper.COLUMN_NAME,SQliteHelper.COLUMN_CATEGORY,SQliteHelper.COLUMN_ICON};
+            SQliteHelper.COLUMN_NAME,SQliteHelper.COLUMN_CATEGORY,SQliteHelper.COLUMN_ICON,SQliteHelper.COLUMN_URL};
 
     public CompaniesDataSource(Context context) {
         dbHelper = new SQliteHelper(context);
@@ -34,6 +34,7 @@ public class CompaniesDataSource {
         values.put("name", company.getName());
         values.put("category", company.getCategory());
         values.put("icon", company.getIcon_url());
+        values.put("url", company.getUrl());
         long i = database.insert(SQliteHelper.TABLE_NAME, null, values);
     }
 
@@ -57,6 +58,7 @@ public class CompaniesDataSource {
         company.setName(cursor.getString(1));
         company.setCategory(cursor.getString(2));
         company.setIcon_url(cursor.getString(3));
+        company.setUrl(cursor.getString(4));
         return company;
     }
     public void deleteAllCompanies(){

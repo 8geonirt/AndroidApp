@@ -22,12 +22,19 @@ public class Company {
     private int id;
     private String name;
     private String icon_url;
+    private String url;
     private String category;
     private Bitmap image;
     private CompaniesAdapter adapter;
     private Context context;
     public Company(){
 
+    }
+    public void setUrl(String url){
+        this.url = url;
+    }
+    public String getUrl(){
+        return this.url;
     }
     public void setContext(Context context){
         this.context = context;

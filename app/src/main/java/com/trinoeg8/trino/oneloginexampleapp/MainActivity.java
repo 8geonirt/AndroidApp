@@ -137,6 +137,8 @@ public static String SERVER_URL = "https://app.onelogin.com/mobile/v2/logins?ver
                             currentCompany.setIcon_url(parser.nextText());
                         } else if (name.equalsIgnoreCase("category")){
                             currentCompany.setCategory(parser.nextText());
+                        }else if (name.equalsIgnoreCase("url")){
+                            currentCompany.setUrl(parser.nextText());
                         }
                     }
                     break;

@@ -1,9 +1,14 @@
 package com.trinoeg8.trino.oneloginexampleapp;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.trinoeg8.trino.oneloginexampleapp.Clases.CompaniesDataSource;
 import com.trinoeg8.trino.oneloginexampleapp.Clases.Company;
@@ -39,6 +44,15 @@ public class CompaniesList extends ActionBarActivity{
         Log.i("Total",Integer.toString(list.size()));
         adapter = new CompaniesAdapter(this,0,list);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Company c = list.get(position);
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(c.getUrl()));
+                startActivity(i);
+            }
+        });
     }
     @Override
     protected void onResume(){
