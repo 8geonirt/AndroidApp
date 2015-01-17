@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.trinoeg8.trino.oneloginexampleapp.Clases.Company;
+import com.trinoeg8.trino.oneloginexampleapp.Clases.ImageLoader;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,11 +32,13 @@ import java.util.ArrayList;
 public class CompaniesAdapter extends ArrayAdapter<Company> {
     private ArrayList<Company> companies;
     private Context context;
-    private String tempCategory =" ";
+    private String tempCategory ="";
+    public ImageLoader imageLoader;
     public CompaniesAdapter(Context context, int textViewResourceId, ArrayList<Company> companies) {
         super(context, textViewResourceId, companies);
         this.companies= companies;
         this.context = context;
+        imageLoader=new ImageLoader(context);
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -63,7 +66,8 @@ public class CompaniesAdapter extends ArrayAdapter<Company> {
                 companyName.setText(company.getName());
             }
             if (companyIcon != null) {
-                companyIcon.setImageBitmap(company.getImage());
+                imageLoader.DisplayImage(company.getIcon_url(), companyIcon);
+                //companyIcon.setImageBitmap(company.getImage());
             }
         }
         return v;
