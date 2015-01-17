@@ -71,47 +71,4 @@ public class Company {
     public void setCategory(String category) {
         this.category = category;
     }
-    public void loadImage(CompaniesAdapter adapter) {
-        this.adapter = adapter;
-        if (this.icon_url != null && !icon_url.equals("")) {
-            new ImageLoadTask().execute(icon_url);
-        }
-    }
-    private class ImageLoadTask extends AsyncTask<String, String, Bitmap> {
-
-        @Override
-        protected void onPreExecute() {
-        }
-        protected Bitmap doInBackground(String... param) {
-            try {
-                if(param[0].startsWith("http")){
-                    URL url = new URL(param[0]);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setDoInput(true);
-                    connection.connect();
-                    InputStream input = connection.getInputStream();
-                    Bitmap icon = BitmapFactory.decodeStream(input);
-                    return icon;
-                }
-                return null;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        protected void onProgressUpdate(String... progress) {
-        }
-
-        protected void onPostExecute(Bitmap icon) {
-            if (icon != null) {
-                image = icon;
-                if (adapter != null) {
-                    adapter.notifyDataSetChanged();
-                }
-            }else{
-                image = null;
-            }
-        }
-    }
 }

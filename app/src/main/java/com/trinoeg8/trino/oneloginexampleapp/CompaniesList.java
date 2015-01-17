@@ -43,15 +43,9 @@ public class CompaniesList extends ActionBarActivity{
         Log.i("Total",Integer.toString(list.size()));
         adapter = new CompaniesAdapter(this,0,list);
         listView.setAdapter(adapter);
-        /*for(Company c:list){
-            c.loadImage(adapter);
-        }*/
     }
     @Override
     protected void onResume(){
         super.onResume();
-        /*for(Company c:list){
-            c.loadImage(adapter);
-        }*/
     }
 }
