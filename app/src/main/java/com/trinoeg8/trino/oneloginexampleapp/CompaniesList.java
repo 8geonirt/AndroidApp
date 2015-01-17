@@ -36,6 +36,9 @@ public class CompaniesList extends ActionBarActivity{
         }
         if(datasource!=null){
             list = datasource.getAllCompanies();
+            for(Company c:list){
+                c.setContext(this);
+            }
         }
         Log.i("Total",Integer.toString(list.size()));
         adapter = new CompaniesAdapter(this,0,list);

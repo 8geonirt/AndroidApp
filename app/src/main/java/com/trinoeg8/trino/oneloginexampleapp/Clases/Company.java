@@ -1,6 +1,7 @@
 package com.trinoeg8.trino.oneloginexampleapp.Clases;
 
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -24,8 +25,15 @@ public class Company {
     private String category;
     private Bitmap image;
     private CompaniesAdapter adapter;
+    private Context context;
     public Company(){
 
+    }
+    public void setContext(Context context){
+        this.context = context;
+    }
+    public Context getContext(){
+        return context;
     }
     public int getId() {
         return id;
@@ -55,6 +63,9 @@ public class Company {
         return category;
     }
     public Bitmap getImage() {
+        if(image==null){
+            image = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher);
+        }
         return image;
     }
     public void setCategory(String category) {
@@ -73,13 +84,16 @@ public class Company {
         }
         protected Bitmap doInBackground(String... param) {
             try {
-                URL url = new URL(param[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                Bitmap icon = BitmapFactory.decodeStream(input);
-                return icon;
+                if(param[0].startsWith("http")){
+                    URL url = new URL(param[0]);
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setDoInput(true);
+                    connection.connect();
+                    InputStream input = connection.getInputStream();
+                    Bitmap icon = BitmapFactory.decodeStream(input);
+                    return icon;
+                }
+                return null;
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
@@ -95,6 +109,8 @@ public class Company {
                 if (adapter != null) {
                     adapter.notifyDataSetChanged();
                 }
+            }else{
+                image = null;
             }
         }
     }

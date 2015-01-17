@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class CompaniesAdapter extends ArrayAdapter<Company> {
     private ArrayList<Company> companies;
     private Context context;
-    private String tempCategory ="";
+    private String tempCategory =" ";
     public CompaniesAdapter(Context context, int textViewResourceId, ArrayList<Company> companies) {
         super(context, textViewResourceId, companies);
         this.companies= companies;
