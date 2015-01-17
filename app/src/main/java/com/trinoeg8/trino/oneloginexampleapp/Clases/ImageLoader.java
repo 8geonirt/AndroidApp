@@ -60,47 +60,42 @@ public class ImageLoader {
 
     private Bitmap getBitmap(String url)
     {
-        File f=fileCache.getFile(url);
-
-        //from SD cache
-        Bitmap b = decodeFile(f);
-        if(b!=null)
-            return b;
-
-        //from web
-        try {
-            Bitmap bitmap=null;
-            URL imageUrl = new URL(url);
-            HttpURLConnection conn = (HttpURLConnection)imageUrl.openConnection();
-            conn.setConnectTimeout(30000);
-            conn.setReadTimeout(30000);
-            conn.setInstanceFollowRedirects(true);
-            InputStream is=conn.getInputStream();
-            OutputStream os = new FileOutputStream(f);
-            Utils.CopyStream(is, os);
-            os.close();
-            conn.disconnect();
-            bitmap = decodeFile(f);
-            return bitmap;
-        } catch (Throwable ex){
-            ex.printStackTrace();
-            if(ex instanceof OutOfMemoryError)
-                memoryCache.clear();
-            return null;
+        if(url.startsWith("http")){
+            File f=fileCache.getFile(url);
+            Bitmap b = decodeFile(f);
+            if(b!=null)
+                return b;
+            try {
+                Bitmap bitmap=null;
+                URL imageUrl = new URL(url);
+                HttpURLConnection conn = (HttpURLConnection)imageUrl.openConnection();
+                conn.setConnectTimeout(30000);
+                conn.setReadTimeout(30000);
+                conn.setInstanceFollowRedirects(true);
+                InputStream is=conn.getInputStream();
+                OutputStream os = new FileOutputStream(f);
+                Utils.CopyStream(is, os);
+                os.close();
+                conn.disconnect();
+                bitmap = decodeFile(f);
+                return bitmap;
+            } catch (Throwable ex){
+                ex.printStackTrace();
+                if(ex instanceof OutOfMemoryError)
+                    memoryCache.clear();
+                return null;
+            }
         }
+        return null;
     }
 
-    //decodes image and scales it to reduce memory consumption
     private Bitmap decodeFile(File f){
         try {
-            //decode image size
             BitmapFactory.Options o = new BitmapFactory.Options();
             o.inJustDecodeBounds = true;
             FileInputStream stream1=new FileInputStream(f);
             BitmapFactory.decodeStream(stream1,null,o);
             stream1.close();
-
-            //Find the correct scale value. It should be the power of 2.
             final int REQUIRED_SIZE=70;
             int width_tmp=o.outWidth, height_tmp=o.outHeight;
             int scale=1;
@@ -111,8 +106,6 @@ public class ImageLoader {
                 height_tmp/=2;
                 scale*=2;
             }
-
-            //decode with inSampleSize
             BitmapFactory.Options o2 = new BitmapFactory.Options();
             o2.inSampleSize=scale;
             FileInputStream stream2=new FileInputStream(f);
@@ -127,7 +120,6 @@ public class ImageLoader {
         return null;
     }
 
-    //Task for the queue
     private class PhotoToLoad
     {
         public String url;
