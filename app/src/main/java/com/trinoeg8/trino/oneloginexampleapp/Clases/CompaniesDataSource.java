@@ -42,7 +42,6 @@ public class CompaniesDataSource {
         Cursor cursor = database.query(SQliteHelper.TABLE_NAME,
                 allColumns, null, null, null, null, "category asc");
         cursor.moveToFirst();
-        Log.i("Cursor size",Integer.toString(cursor.getCount()));
         while (!cursor.isAfterLast()) {
             Company c = cursorToCompany(cursor);
             companies.add(c);

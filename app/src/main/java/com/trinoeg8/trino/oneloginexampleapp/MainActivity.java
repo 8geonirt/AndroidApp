@@ -143,7 +143,6 @@ public static String SERVER_URL = "https://app.onelogin.com/mobile/v2/logins?ver
                 case XmlPullParser.END_TAG:
                     name = parser.getName();
                     if (name.equalsIgnoreCase("site") && currentCompany!= null){
-                        Log.i("Guarda Company","Si");
                         companies.add(currentCompany);
                     }
             }
@@ -152,7 +151,6 @@ public static String SERVER_URL = "https://app.onelogin.com/mobile/v2/logins?ver
         saveCompanies(companies);
     }
     private void saveCompanies(ArrayList<Company> companies) {
-        Log.i("Total compañías",Integer.toString(companies.size()));
         Iterator<Company> it = companies.iterator();
         datasource = new CompaniesDataSource(this);
         try {
