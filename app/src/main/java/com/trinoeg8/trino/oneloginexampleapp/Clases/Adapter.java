@@ -1,5 +1,6 @@
 package com.trinoeg8.trino.oneloginexampleapp.Clases;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.trinoeg8.trino.oneloginexampleapp.R;
 import java.util.List;
@@ -19,6 +21,8 @@ public class Adapter extends SelectableAdapter<Adapter.ViewHolder>{
     private ViewHolder.ClickListener clickListener;
     private ImageLoader imageLoader;
     private String tempCategory;
+    private static final int DIFERENT_CATEGORY = 0;
+    private static final int SAME_CATEGORY = 1;
     public Adapter(ViewHolder.ClickListener clickListener, List<Company> list,Context context,String tempCategory){
         super();
         this.clickListener = clickListener;
@@ -29,11 +33,21 @@ public class Adapter extends SelectableAdapter<Adapter.ViewHolder>{
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        final int layout = R.layout.company_row;
+        Log.i("ViewType",Integer.toString(viewType));
+        final int layout = viewType == SAME_CATEGORY ? R.layout.company_row_category: R.layout.company_row;
         View v = LayoutInflater.from(parent.getContext()).inflate(layout,parent,false);
         return new ViewHolder(v,clickListener);
     }
-
+    @Override
+    public int getItemViewType(int position){
+        final Company item = items.get(position);
+        if(!tempCategory.equalsIgnoreCase(item.getCategory())){
+            tempCategory = "";
+            return DIFERENT_CATEGORY;
+        }else{
+            return SAME_CATEGORY;
+        }
+    }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position){
         final Company company = items.get(position);
@@ -41,11 +55,11 @@ public class Adapter extends SelectableAdapter<Adapter.ViewHolder>{
         if (company.getIcon_url()!= null) {
             imageLoader.DisplayImage(company.getIcon_url(),holder.logo);
         }
-       //if(!tempCategory.equalsIgnoreCase(company.getCategory())){
-            holder.category.setText(company.getCategory().toString());
-        /*}else{
-            holder.category.setVisibility(View.GONE);
-        }*/
+        holder.category.setText(company.getCategory().toString());
+        if(position == 0){
+            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,35);
+            holder.category.setLayoutParams(p);
+        }
         tempCategory = company.getCategory().toString();
     }
     public Company getSelectedItem(int position){
