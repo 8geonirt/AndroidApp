@@ -30,7 +30,7 @@ public class CompaniesAdapter extends ArrayAdapter<Company> {
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
         Company company= companies.get(position);
-        if(company!=null){
+        /*if(company!=null){
             if (v == null) {
                 LayoutInflater vi = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = vi.inflate(R.layout.company_row,parent,false);
@@ -54,7 +54,7 @@ public class CompaniesAdapter extends ArrayAdapter<Company> {
             if (companyIcon != null) {
                 imageLoader.DisplayImage(company.getIcon_url(), companyIcon);
             }
-        }
+        }*/
         return v;
     }
 }
